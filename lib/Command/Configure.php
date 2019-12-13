@@ -236,7 +236,7 @@ class Configure extends Command {
 
 				break;
 
-			case 'sms77':
+			case 'sms77io':
 				$config->setProvider($provider);
 				/** @var Sms77IoConfig $providerConfig */
 				$providerConfig = $config->getProvider()->getConfig();
