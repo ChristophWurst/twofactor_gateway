@@ -76,6 +76,7 @@ class ClickatellPortalConfig implements IProviderConfig {
 	}
 
 	public function remove() {
+		$this->deleteFromNumber();
 		foreach(self::expected as $key) {
 			$this->config->deleteAppValue(Application::APP_NAME, $key);
 		}
