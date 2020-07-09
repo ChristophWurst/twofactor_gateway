@@ -189,7 +189,7 @@ Use new Clickatell.com API for sending SMS.
 * Login with your credencials at [portal.clickatell.com](https://portal.clickatell.com/)
 * Click at the button `Create new integration`
   * API Type: HTTP
-  * Messaging type: One-way messaging
+  * Messaging type: One-way messaging (or Two-way messaging if required)
   * Delivery type: Time Critical
   * [Optional] Convert mobile numbers into international format: On
   * [Optional] Protect my account from fraud: On
@@ -201,6 +201,8 @@ occ twofactorauth:gateway:configure sms
 ```
 
 Select `clickatellportal` and enter your API-Key.
+
+Don't forget to enter `from` number if it's two-way messaging type! It's required to leave it empty for one-way messaging.
 
 ### ClickSend
 URL: https://www.clicksend.com
