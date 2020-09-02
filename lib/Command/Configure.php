@@ -39,6 +39,7 @@ use OCA\TwoFactorGateway\Service\Gateway\SMS\Provider\PuzzelSMSConfig;
 use OCA\TwoFactorGateway\Service\Gateway\SMS\Provider\HuaweiE3531Config;
 use OCA\TwoFactorGateway\Service\Gateway\SMS\Provider\SpryngSMSConfig;
 use OCA\TwoFactorGateway\Service\Gateway\SMS\Provider\ClickatellCentralConfig;
+use OCA\TwoFactorGateway\Service\Gateway\SMS\Provider\ClickatellPortalConfig;
 use OCA\TwoFactorGateway\Service\Gateway\Telegram\Gateway as TelegramGateway;
 use OCA\TwoFactorGateway\Service\Gateway\Telegram\GatewayConfig as TelegramConfig;
 use Symfony\Component\Console\Command\Command;
@@ -109,7 +110,7 @@ class Configure extends Command {
 	private function configureSms(InputInterface $input, OutputInterface $output) {
 		$helper = $this->getHelper('question');
 
-		$providerQuestion = new Question('Please choose a SMS provider (websms, playsms, clockworksms, puzzelsms, ecallsms, voipms, huawei_e3531, spryng, sms77io, ovh, clickatellcentral, clicksend): ', 'websms');
+		$providerQuestion = new Question('Please choose a SMS provider (websms, playsms, clockworksms, puzzelsms, ecallsms, voipms, huawei_e3531, spryng, sms77io, ovh, clickatellcentral, clickatellportal, clicksend): ', 'websms');
 		$provider = $helper->ask($input, $output, $providerQuestion);
 
 		/** @var SMSConfig $config */
@@ -298,6 +299,25 @@ class Configure extends Command {
 				$providerConfig->setApi($api);
 				$providerConfig->setUser($username);
 				$providerConfig->setPassword($password);
+				break;
+
+			case 'clickatellportal':
+				$config->setProvider($provider);
+				/** @var ClickatellPortalConfig $providerConfig */
+				$providerConfig = $config->getProvider()->getConfig();
+
+				$apiQuestion = new Question('Please enter your portal.clickatell.com API-Key: ');
+				$apiKey = $helper->ask($input, $output, $apiQuestion);
+				$fromQuestion = new Question('Please enter your sender number for two-way messaging. Leave it empty for one-way messaging: ');
+				$fromNumber = $helper->ask($input, $output, $fromQuestion);
+
+				$providerConfig->setApiKey($apiKey);
+
+				if (empty($fromNumber)) {
+					$providerConfig->deleteFromNumber();
+				} else {
+					$providerConfig->setFromNumber($fromNumber);
+				}
 				break;
 
 			case 'clicksend':

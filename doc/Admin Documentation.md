@@ -180,6 +180,30 @@ occ twofactorauth:gateway:configure sms
 
 Select `clickatellcentral` and enter your API-ID, API username and API password.
 
+### Clickatell (SMS Platform)
+URL: https://portal.clickatell.com/
+Stability: Experimental
+
+Use new Clickatell.com API for sending SMS.
+
+* Login with your credencials at [portal.clickatell.com](https://portal.clickatell.com/)
+* Click at the button `Create new integration`
+  * API Type: HTTP
+  * Messaging type: One-way messaging (or Two-way messaging if required)
+  * Delivery type: Time Critical
+  * [Optional] Convert mobile numbers into international format: On
+  * [Optional] Protect my account from fraud: On
+* Save changes!
+
+Interactive admin configuration:
+```bash
+occ twofactorauth:gateway:configure sms
+```
+
+Select `clickatellportal` and enter your API-Key.
+
+Don't forget to enter `from` number if it's two-way messaging type! It's required to leave it empty for one-way messaging.
+
 ### ClickSend
 URL: https://www.clicksend.com
 Stability: Experimental
